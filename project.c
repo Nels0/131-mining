@@ -23,8 +23,10 @@ int MinInt(int *a, int length)
 	int min = a[0];
 
 	//Check each val for a minimum int
-	for(int i = 0; i < length; i++){
-		if (a[i] < min){
+	for(int i = 0; i < length; i++)
+	{
+		if (a[i] < min)
+		{
 			min = a[i];
 		}
 	}
@@ -40,12 +42,17 @@ int DivisorOfThree(int a, int b, int c)
 		return -1;
 	}
 
-	int nums[3] = {a, b, c};
+	int nums[2];
+	nums[0] = a;
+	nums[1] = b;
+	nums[2] = c;
 
 	int min = MinInt(nums, 3); //To save time, we know the GCD will never be greater than the smallest number
 
-	for (int i = min; i > 0; i--){
-		if (a%i == 0 && b%i == 0 && c%i ==0){
+	for (int i = min; i > 0; i--)
+	{
+		if (a%i == 0 && b%i == 0 && c%i ==0)
+		{
 			return i; //Return the first common divisor (which will be the greatest)
 		}
 	}
@@ -56,7 +63,26 @@ int DivisorOfThree(int a, int b, int c)
 /* Your comment goes here*/
 double AverageSheep(int *counts)
 {
-	return counts[0] + 99999.9;
+	int i = 0;
+	int goodCount = 0;
+	double sum = 0;
+	while (counts[i] != 9999)
+	{
+		
+		if (counts[i] > 0)
+		{
+			sum += counts[i];
+			goodCount++;
+		}
+
+		i++;
+	}
+
+	if (goodCount == 0){
+		return 0.0;
+	} else {
+		return sum/goodCount;
+	}
 }
 
 /* Your comment goes here*/
