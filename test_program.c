@@ -78,7 +78,7 @@ void Test_DivisorOfThree(void)
 /* A function to test Task Two */
 void Test_AverageSheep(void)
 {
-	int sheep1[MAX_ARRAY_SIZE] = {0, 12, 18, 19, 9999};
+	int sheep1[MAX_ARRAY_SIZE] = {25, 12, 18, 19, 9999};
 	int sheep2[MAX_ARRAY_SIZE] = {-1, 25, 12, 18, -1, 9999};
 	int sheep3[MAX_ARRAY_SIZE] = {-1, 22, 9999, -1, 25, 12};
 	int sheep4[MAX_ARRAY_SIZE] = {-1, -1, 9999, -1, 25, 12};
@@ -87,6 +87,11 @@ void Test_AverageSheep(void)
 		printf("\nTask Two:   AverageSheep()   - not yet implemented");
 	} else {
 		printf("\nTask Two:   AverageSheep()   - ");
+		if ((AverageSheep(sheep1) < 18.499999) || (AverageSheep(sheep2) > 18.500001)) {
+			printf("FAIL (sheep1) ");
+		} else {
+			printf("PASS ");
+		}
 		if ((AverageSheep(sheep2) < 18.333332) || (AverageSheep(sheep2) > 18.333334)) {
 			printf("FAIL (sheep2) ");
 		} else {
