@@ -87,7 +87,7 @@ void Test_AverageSheep(void)
 		printf("\nTask Two:   AverageSheep()   - not yet implemented");
 	} else {
 		printf("\nTask Two:   AverageSheep()   - ");
-		if ((AverageSheep(sheep1) < 18.499999) || (AverageSheep(sheep2) > 18.500001)) {
+		if ((AverageSheep(sheep1) < 18.499999) || (AverageSheep(sheep2) > 18.050001)) {
 			printf("FAIL (sheep1) ");
 		} else {
 			printf("PASS ");
