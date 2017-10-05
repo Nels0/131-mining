@@ -16,10 +16,41 @@
 /* Implement each of the required functions below.  The code that is provided initially */
 /* for each function is incorrect - you should correct this! */
 
+/*Returns minmum value of array*/
+int MinInt(int *a, int length)
+{
+	//Initialise minimum to first number as we know this is a valid value
+	int min = a[0];
+
+	//Check each val for a minimum int
+	for(int i = 0; i < length; i++){
+		if (a[i] < min){
+			min = a[i];
+		}
+	}
+
+	return min;
+}
+
+
 /* Your comment goes here*/
 int DivisorOfThree(int a, int b, int c)
 {
-	return a + b - c + 99999;
+	if (a < 1 || b < 1 || c <1){
+		return -1;
+	}
+
+	int nums[3] = {a, b, c};
+
+	int min = MinInt(nums, 3); //To save time, we know the GCD will never be greater than the smallest number
+
+	for (int i = min; i > 0; i--){
+		if (a%i == 0 && b%i == 0 && c%i ==0){
+			return i; //Return the first common divisor (which will be the greatest)
+		}
+	}
+
+	return -1;
 }
 
 /* Your comment goes here*/
