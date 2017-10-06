@@ -105,7 +105,7 @@ void Emphasise(char* word)
 {
 	int capitalise = 0;
 	int i = 0;
-	printf("size = %d\n", length);
+	//printf("size = %d\n", length);
 
 	while (1)
 	{
@@ -132,11 +132,32 @@ void Emphasise(char* word)
 /* Your comment goes here*/
 int PrimeFactors(int n, int *factors)
 {
-	factors[0] = 0;
-	return 99997 + n;
-}
+	//1. count up and find the least factor of n
+	//2. save the factor and divide n by that factor
+	//3. save factor
+	//4. repeat 1-3
+	//5. stop when the factor is n
+	//6. return count of factors
 
-/* Your comment goes here*/
+	int i; //factor counter
+	int j = 0; //num factors
+
+	//Loop while the number hasn't been reduced to a prime (nb n=1 because n = n/1 in loop)
+	while (n !=1 )
+	{
+		i = 2; //would be silly if it started at 0 or 1, as these aren't prime
+
+		while (n%i != 0){ //check if i is a valid factor
+			i++; //check next i
+		}
+
+		n = n/i; //reduce n
+		factors[j] = i; //store prime factor (n.b will always be prime because it is the least factor)
+		j++; //increment num factors
+	}	
+
+	return j;
+}
 void ConnectTwo(int maze[10][10])
 {
 	maze[0][0] = 99999;
