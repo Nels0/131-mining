@@ -34,6 +34,21 @@ int MinInt(int *a, int length)
 	return min;
 }
 
+//Toggles a psuedo boolean values
+int ToggleBool(int bool)
+{
+	if (bool == 1)
+	{
+		return 0;
+	} else if (bool == 0)
+	{
+		return 1;
+	} else
+	{
+		return 0;
+	}
+}
+
 
 /* Your comment goes here*/
 int DivisorOfThree(int a, int b, int c)
@@ -88,7 +103,30 @@ double AverageSheep(int *counts)
 /* Your comment goes here*/
 void Emphasise(char* word)
 {
-	word[0] = '~';
+	int capitalise = 0;
+	int i = 0;
+	printf("size = %d\n", length);
+
+	while (1)
+	{
+		if (word[i] == '_')
+		{
+			if(capitalise == 0)
+			{
+				capitalise = 1;
+			} else
+			{
+				return;
+			}
+		} else if (capitalise == 1) 
+		{
+			if (word[i] >= 'a' && word[i] <= 'z')
+			{
+				word[i] = word[i] - 32;
+			}
+		}
+		i++;
+	} 
 }
 
 /* Your comment goes here*/
