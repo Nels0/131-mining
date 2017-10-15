@@ -123,28 +123,29 @@ void Emphasise(char* word)
 {
     int capitalise = 0;
     int i = 0;
-    //printf("size = %d\n", length);
+    int len = strlen(word);
 
-    while (1)
-    {
-        if (word[i] == '_')
-        {
-            if(capitalise == 0)
-            {
-                capitalise = 1;
-            } else
-            {
-                return;
-            }
-        } else if (capitalise == 1) 
-        {
-            if (word[i] >= 'a' && word[i] <= 'z')
-            {
-                word[i] = word[i] - 32;
+    for (i = 0; i < len; i++){
+        if (word[i] == '_'){
+            if(capitalise == 0){
+                capitalise = -1;
+            } else if (capitalise == -1){
+                capitalise = -2;
             }
         }
-        i++;
-    } 
+        else if (capitalise == -1){
+            if (word[i] >= 'a' && word[i] <= 'z'){
+                word[i + capitalise] = word[i] - 32;
+            }else{
+                word[i + capitalise] = word[i];
+            }
+        }
+        else if (capitalise == -2){        
+            word[i + capitalise] = word[i];
+        }
+    }
+
+    word[len + capitalise] = 0;
 }
 
 /* Your comment goes here*/
@@ -178,7 +179,17 @@ int PrimeFactors(int n, int *factors)
 }
 void ConnectTwo(int maze[10][10])
 {
-    
+ //Find start and end co-ords
+
+    int i, j;
+
+    for (i = 0; i <10; i++){
+        for (j = 0; j <10; j++){
+
+        }
+    }
+
+
 }
 
 /* Your comment goes here*/

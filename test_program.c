@@ -23,6 +23,8 @@ void Test_GoldRush(void);
 /* the test functions */
 int main(void)
 {
+
+	/*
 	// Print welcome message
 	printf("\nENGGEN131 Project - Semester Two - 2017\n\n");
 	printf("\nWelcome to the minimal test program for Project Two.\n\n");
@@ -34,6 +36,8 @@ int main(void)
 	printf("are  defined  correctly.   It  is  up  to  you  to  test your code more\n");
 	printf("thoroughly, but hopefully this template will be a useful guide for you.\n\n");
 	printf("Good luck!\n");
+	*/
+
 
 	// Minimal testing of each function
 	Test_DivisorOfThree();
@@ -87,8 +91,9 @@ void Test_AverageSheep(void)
 		printf("\nTask Two:   AverageSheep()   - not yet implemented");
 	} else {
 		printf("\nTask Two:   AverageSheep()   - ");
-		if ((AverageSheep(sheep1) < 18.499999) || (AverageSheep(sheep2) > 18.050001)) {
+		if ((AverageSheep(sheep1) < 18.499999) || (AverageSheep(sheep1) > 18.50001)) {
 			printf("FAIL (sheep1) ");
+			printf("Got: \"%f\" ", AverageSheep(sheep1) );
 		} else {
 			printf("PASS ");
 		}
@@ -126,18 +131,21 @@ void Test_Emphasise(void)
 		Emphasise(wordsA);
 		if (strcmp(wordsA, "this is a GOOD question!")) {
 			printf("FAIL (wordsA) ");
+			printf("Got: \"%s\" ", wordsA );
 		} else {
 			printf("PASS ");
 		}
 		Emphasise(wordsB);
 		if (strcmp(wordsB, "It is OVER 9000!")) {
 			printf("FAIL (wordsB) ");
+			printf("Got: \"%s\" ", wordsB );
 		} else {
 			printf("PASS ");
 		}
 		Emphasise(wordsC);
 		if (strcmp(wordsC, "NOTHING TO SEE HERE")) {
 			printf("FAIL (wordsC) ");
+			printf("Got: \"%s\" ", wordsC );
 		} else {
 			printf("PASS ");
 		}
@@ -167,9 +175,12 @@ void Test_PrimeFactors(void)
 		} else {
 			printf("PASS ");
 		}
-		numFactors = PrimeFactors(13, factors);
+		numFactors = PrimeFactors(500000000000000000000000000, factors);
 		if (numFactors != 1 || (factors[0] != 13)) {
-			printf("FAIL (13) ");
+			printf("numFactors = %d. ", numFactors);
+			for (int i = 0; i < numFactors; i++){
+				printf("%d, ", factors[i] );
+			}
 		} else {
 			printf("PASS ");
 		}
