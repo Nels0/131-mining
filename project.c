@@ -1,14 +1,8 @@
 /* ENGGEN131, Semester Two, 2017 */
 
-/* PROJECT SOLUTION BY:  << place your name and ID number here >> */
+/* PROJECT SOLUTION BY:  Nelson Cook 181796651 */
 
 #include "project.h"
-
-
-//For AddOne
-#define ZEROCHAR 48
-#define ONECHAR  49
-#define NINECHAR 57
 
 /* HELPER FUNCTIONS */
 /* If you have defined any "helper" functions, which you call from the required */
@@ -18,6 +12,11 @@
 /* describes their purpose, and which of the tasks they support. */
 
 
+
+//For AddOne
+#define ZEROCHAR 48
+#define ONECHAR  49
+#define NINECHAR 57
 
 
 /* MinInt
@@ -81,8 +80,7 @@ Author: Nelson Cook
 Inputs
     0 - INT     
 Outputs
-    0 - INT: -1, 0 or 1: Whether number is pos
-
+    0 - INT: -1, 0 or 1: Whether number is negative, zero, or positive
 */
 
 int IntSign(int val)
@@ -98,23 +96,25 @@ int IntSign(int val)
 
 
 /*AddSig
-Offsets a 1d char array by +1 and sets the first element of the array to '1' (49)
 
 Author: ncoo162
 
 Inputs:
-    
-Outputs
+    0 - Out 
+    1 - 
+    2 - 
+    3 - 
+Outputs:
     nil
 */
 void AddSig(char *output, char tempchar, int pos, int length)
 {
 
     char t;
-    //TODO: Recurse Properly
+
     if (pos == length) {
         output[pos] = tempchar;
-        output[pos + 1] = 0;
+        output[pos + 1] = 0; //end string char
     } else {
         t = output[pos];
         output[pos] = tempchar;
@@ -130,7 +130,19 @@ void AddSig(char *output, char tempchar, int pos, int length)
 /* for each function is incorrect - you should correct this! */
 
 
-/* Your comment goes here*/
+/* DivisorOfThree
+Finds the greatest common divisor (GCD) of 3 integers.
+Returns -1 if any numbers are less than 1
+
+Author: Nelson Cook
+
+Inputs
+    0 - INT - Number to find divisor of
+    1 - INT - Number to find divisor of
+    2 - INT - Number to find divisor of
+Outputs
+    0 - INT: Largest number which is a factor of args 0-2
+*/
 int DivisorOfThree(int a, int b, int c)
 {
     if (a < 1 || b < 1 || c <1){
@@ -141,26 +153,37 @@ int DivisorOfThree(int a, int b, int c)
 
     int min = MinInt(nums, 3); //To save time, we know the GCD will never be greater than the smallest number
 
-    for (int i = min; i > 0; i--) {
-        if (a%i == 0 && b%i == 0 && c%i ==0) {
+    for (int i = min; i > 0; i--){
+        if (a%i == 0 && b%i == 0 && c%i ==0){
             return i; //Return the first common divisor (which will be the greatest)
         }
     }
 
-    return -1;
+    return -1; //just in case
 }
 
-/* Your comment goes here*/
+/* Average Sheep
+Finds the mean of a series of values.
+Requires end of array value of 9999
+Values of -1 will be ignored.
+
+Author: Nelson Cook
+
+Inputs
+    0 - INT Array: Dataset to compute average of
+
+Outputs
+    0 - DOUBLE: Mean of the dataset
+*/
 double AverageSheep(int *counts)
 {
     int i = 0;
     int goodCount = 0;
     double sum = 0;
-    while (counts[i] != 9999)
-    {
-        
-        if (counts[i] > 0)
-        {
+
+
+    while (counts[i] != 9999){        
+        if (counts[i] != -1){
             sum += counts[i];
             goodCount++;
         }
@@ -171,11 +194,24 @@ double AverageSheep(int *counts)
     if (goodCount == 0){
         return 0.0;
     } else {
-        return sum/goodCount;
+        return sum/goodCount; //will be correct double value as "sum" is double
     }
 }
 
-/* Your comment goes here*/
+/* Emphasise
+Use '_' to convert letters in a string to uppercase 
+
+Example: in: "This is a _good_ question."
+        out: "This is a GOOD question."
+
+Author: Nelson Cook
+
+Inputs
+    0 - CHAR Array: String to convert
+
+Outputs
+    void
+*/
 void Emphasise(char* word)
 {
     int capitalise = 0;
@@ -193,7 +229,7 @@ void Emphasise(char* word)
         else if (capitalise == -1){
             if (word[i] >= 'a' && word[i] <= 'z'){
                 word[i + capitalise] = word[i] - 32;
-            }else{
+            } else {
                 word[i + capitalise] = word[i];
             }
         }
@@ -205,7 +241,22 @@ void Emphasise(char* word)
     word[len + capitalise] = 0;
 }
 
-/* Your comment goes here*/
+/* Prime Factors
+Finds prime factors of an intger. Does this by finding the least divisors of the integer,
+then finding least divisors of the remainder in sucession.
+First least divisor will always be prime. This could be optimised using sieve of erathansodnas 
+to avoid checking non-prime divisors, or not checking non-prime numbers less than ~20, however,
+the function will hit MAX_INT before it slows down appreciably.
+
+Author: Nelson Cook
+
+Inputs
+    0 - INT: Integer to find prime factors of
+    1 - INT Array: List of factors found
+
+Outputs
+    0 - INT: Number of prime factors found, and length of arg 1
+*/
 int PrimeFactors(int n, int *factors)
 {
     //1. count up and find the least factor of n
@@ -222,8 +273,8 @@ int PrimeFactors(int n, int *factors)
     while (n !=1 ){
         i = 2; //would be silly if it started at 0 or 1, as these aren't prime
 
-        while (n%i != 0){ //check if i is a valid factor
-            i++; //check next i
+        while (n%i != 0){
+            i++;
         }
 
         n = n/i; //reduce n
@@ -238,7 +289,7 @@ int PrimeFactors(int n, int *factors)
 void ConnectTwo(int maze[10][10])
 {
 
-
+    //Stops the compiler complaining.
     int i, j, x, y;
     int start_x = 0;
     int start_y = 0;
@@ -252,7 +303,7 @@ void ConnectTwo(int maze[10][10])
                 //printf("\nfound start: %d, %d\n", i, j);
                 start_x = i;
                 start_y = j;
-            }else if (maze[i][j] == 2){
+            } else if (maze[i][j] == 2){
                 //printf("found end: %d, %d\n", i, j);
                 end_x = i;
                 end_y = j;
@@ -274,8 +325,7 @@ void ConnectTwo(int maze[10][10])
             x += dir_m;
         }
         
-        if (y != end_y)
-        {
+        if (y != end_y){
             y += dir_n;
         }
 
@@ -302,7 +352,17 @@ void Compress(int *input, int *output)
     output[0] = 99999 + input[0];
 }
 
-/* Your comment goes here*/
+/* AddOne
+Adds 1 to a number stored as a character array, rather than as an INT
+
+Author: Nelson Cook
+
+Inputs
+    0 - CHAR Array: String to convert
+
+Outputs
+    void
+*/
 void AddOne(char *input, char *output)
 {
     int carry = 1;
@@ -356,7 +416,7 @@ void Histogram(char *result, int *values, int numValues)
 
             if (j == 0 || j == width || i == 0 || i == height){
                 result[count] = '*';
-            } else if (values[j - 1] >= height - i) {
+            } else if (values[j - 1] >= height - i){
                 result[count] = 'X';
             } else {
                 result[count] = ' ';
