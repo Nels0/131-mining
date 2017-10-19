@@ -85,7 +85,7 @@ void Test_AverageSheep(void)
 	int sheep1[MAX_ARRAY_SIZE] = {25, 12, 18, 19, 9999};
 	int sheep2[MAX_ARRAY_SIZE] = {-1, 25, 12, 18, -1, 9999};
 	int sheep3[MAX_ARRAY_SIZE] = {-1, 22, 9999, -1, 25, 12};
-	int sheep4[MAX_ARRAY_SIZE] = {-1, -1, 9999, -1, 25, 12};
+	int sheep4[MAX_ARRAY_SIZE] = {9999, -1, 9999, -1, 25, 12};
 
 	if (AverageSheep(sheep1) == 99999.9) {
 		printf("\nTask Two:   AverageSheep()   - not yet implemented");
@@ -175,7 +175,7 @@ void Test_PrimeFactors(void)
 		} else {
 			printf("PASS ");
 		}
-		numFactors = PrimeFactors(500000000000000000000000000, factors);
+		numFactors = PrimeFactors(5000, factors);
 		if (numFactors != 1 || (factors[0] != 13)) {
 			printf("numFactors = %d. ", numFactors);
 			for (int i = 0; i < numFactors; i++){
@@ -309,19 +309,19 @@ void Test_AddOne(void)
 		printf("\nTask Eight: AddOne()         - ");
 		AddOne(wordsA, output);
 		if (strcmp(output, "100000")) {
-			printf("FAIL (wordsA) ");
+			printf("FAIL (wordsA), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsB, output);
 		if (strcmp(output, "12400000000")) {
-			printf("FAIL (wordsB) ");
+			printf("FAIL (wordsB), got: %s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsC, output);
 		if (strcmp(output, "10")) {
-			printf("FAIL (wordsC) ");
+			printf("FAIL (wordsC), got: %s ", output);
 		} else {
 			printf("PASS ");
 		}

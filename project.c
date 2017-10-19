@@ -4,6 +4,12 @@
 
 #include "project.h"
 
+
+//For AddOne
+#define ZEROCHAR 48
+#define ONECHAR  49
+#define NINECHAR 57
+
 /* HELPER FUNCTIONS */
 /* If you have defined any "helper" functions, which you call from the required */
 /* functions, you should place them here, at the top of the source file.  This will */
@@ -40,28 +46,61 @@ int MinInt(int *a, int length)
     return min;
 }
 
-/* ToggleBool
-Toggles a pseuo-boolean int value
+
+
+
+
+/* IntSign
+Returns the sign of an integer, or 0 if int is 0
 
 Author: Nelson Cook
 
 Inputs
     0 - INT     
+Outputs
+    0 - INT: -1, 0 or 1: Whether number is pos
+
 */
 
-int ToggleBool(int bool)
+int IntSign(int val)
 {
-    if (bool == 1)
-    {
-        return 0;
-    } else if (bool == 0)
-    {
+    if (val > 0){
         return 1;
-    } else
-    {
+    } else if (val < 0){
+        return -1;
+    } else {
         return 0;
     }
 }
+
+
+/*AddSig
+Offsets a 1d char array by +1 and sets the first element of the array to '1' (49)
+
+Author: ncoo162
+
+Inputs:
+    
+Outputs
+    nil
+*/
+void AddSig(char *output, char tempchar, int pos, int length)
+{
+
+    char t;
+    //TODO: Recurse Properly
+    if (pos == length) {
+        output[pos] = tempchar;
+        output[pos + 1] = 0;
+    } else {
+        t = output[pos];
+        output[pos] = tempchar;
+        AddSig(output, t, pos + 1, length);
+    }
+
+
+}
+
 
 /* REQUIRED FUNCTIONS */
 /* Implement each of the required functions below.  The code that is provided initially */
@@ -75,17 +114,12 @@ int DivisorOfThree(int a, int b, int c)
         return -1;
     }
 
-    int nums[2];
-    nums[0] = a;
-    nums[1] = b;
-    nums[2] = c;
+    int nums[3] = {a, b, c};
 
     int min = MinInt(nums, 3); //To save time, we know the GCD will never be greater than the smallest number
 
-    for (int i = min; i > 0; i--)
-    {
-        if (a%i == 0 && b%i == 0 && c%i ==0)
-        {
+    for (int i = min; i > 0; i--) {
+        if (a%i == 0 && b%i == 0 && c%i ==0) {
             return i; //Return the first common divisor (which will be the greatest)
         }
     }
@@ -128,9 +162,9 @@ void Emphasise(char* word)
     for (i = 0; i < len; i++){
         if (word[i] == '_'){
             if(capitalise == 0){
-                capitalise = -1;
+                capitalise -= 1;
             } else if (capitalise == -1){
-                capitalise = -2;
+                capitalise -= 1;
             }
         }
         else if (capitalise == -1){
@@ -159,11 +193,10 @@ int PrimeFactors(int n, int *factors)
     //6. return count of factors
 
     int i; //factor counter
-    int j = 0; //num factors
+    int numfactors = 0;
 
     //Loop while the number hasn't been reduced to a prime (nb n=1 because n = n/1 in loop)
-    while (n !=1 )
-    {
+    while (n !=1 ){
         i = 2; //would be silly if it started at 0 or 1, as these aren't prime
 
         while (n%i != 0){ //check if i is a valid factor
@@ -171,32 +204,73 @@ int PrimeFactors(int n, int *factors)
         }
 
         n = n/i; //reduce n
-        factors[j] = i; //store prime factor (n.b will always be prime because it is the least factor)
-        j++; //increment num factors
+        factors[numfactors] = i; //store prime factor (n.b will always be prime because it is the least factor)
+        numfactors++; //increment num factors
     }   
 
-    return j;
+    return numfactors;
 }
+
+
 void ConnectTwo(int maze[10][10])
 {
- //Find start and end co-ords
 
-    int i, j;
 
+    int i, j, x, y;
+    int start_x = 0;
+    int start_y = 0;
+    int end_x = 0;
+    int end_y = 0;
+
+    //Find start and end co-ords
     for (i = 0; i <10; i++){
         for (j = 0; j <10; j++){
-
+            if (maze[i][j] == 1){
+                //printf("\nfound start: %d, %d\n", i, j);
+                start_x = i;
+                start_y = j;
+            }else if (maze[i][j] == 2){
+                //printf("found end: %d, %d\n", i, j);
+                end_x = i;
+                end_y = j;
+            }
         }
     }
 
+    //prepare variables for pathfinding
 
+    int dir_m = IntSign(end_x - start_x);
+    int dir_n = IntSign(end_y - start_y);
+    x = start_x;
+    y = start_y;
+
+    //pathfinding
+    while (x != end_x || y != end_y){
+        //printf("loop\n");
+        if (x != end_x){
+            x += dir_m;
+        }
+        
+        if (y != end_y)
+        {
+            y += dir_n;
+        }
+
+
+        maze[x][y] = 3;
+    }
+
+    //Make sure ending is set to correct value (overwritten by pathfinding)
+    maze[end_x][end_y] = 2;
 }
 
 /* Your comment goes here*/
 void DayTrader(int *prices, int numPrices, int *bestRun, int *bestRunIndex)
 {
-    *bestRun = 99999 + prices[0];
-    *bestRunIndex = 99999 + numPrices;
+    int lastRun = 0;
+    int lastRunIndex = 0;
+
+
 }
 
 /* Your comment goes here*/
@@ -208,8 +282,41 @@ void Compress(int *input, int *output)
 /* Your comment goes here*/
 void AddOne(char *input, char *output)
 {
-    input[0] = '1';
-    output[0] = '~';
+    int carry = 1;
+    int len = strlen(input);
+    int i;
+
+
+    //printf("\n Length: %d\n", len);
+    //Add 1 and carry the 1 for the least significant digits
+
+    //output[len - 1] = input[len - 1] + 1;
+    
+    for (i = len - 1; i >= 0; i--){
+
+        output[i] = (char)(input[i] + carry);
+        
+        if (output[i] > '9'){
+            carry = 1;
+            output[i] = '0';
+        } else {            
+            carry = 0;
+        }
+        //printf("Position %d: Was: %c, now %c\n", i, input[i], output[i]);
+    }
+
+//relocate array if it's 1 longer
+    if (carry == 1){
+
+        AddSig(output, output[0], 1, len);
+        output[0] = '1';
+        output[len + 2] = 0;
+    } else {
+        output[len + 1] = 0;
+    }
+
+
+            
 }
 
 /* Your comment goes here*/
