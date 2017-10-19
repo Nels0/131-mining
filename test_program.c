@@ -175,7 +175,7 @@ void Test_PrimeFactors(void)
 		} else {
 			printf("PASS ");
 		}
-		numFactors = PrimeFactors(5000, factors);
+		numFactors = PrimeFactors(13, factors);
 		if (numFactors != 1 || (factors[0] != 13)) {
 			printf("numFactors = %d. ", numFactors);
 			for (int i = 0; i < numFactors; i++){
@@ -338,7 +338,7 @@ void Test_Histogram(void)
 
 	char formatted[MAX_ARRAY_SIZE];
 
-	Histogram(formatted, values0, 0);
+	Histogram(formatted, values0, 3);
 	if (formatted[0] == '~') {
 		printf("\nTask Nine:  Histogram()      - not yet implemented");
 	} else {

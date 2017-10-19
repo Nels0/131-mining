@@ -46,8 +46,31 @@ int MinInt(int *a, int length)
     return min;
 }
 
+/* MaxInt
+Returns max value of array
 
+Author: Nelson Cook
 
+Inputs:
+    0 - INT[]   Array of values to find max of
+    1 - INT     Length of arg 0
+*/
+int MaxInt(int *a, int length)
+{
+    //Initialise minimum to first number as we know this is a valid value
+    int max = a[0];
+
+    //Check each val for a minimum int
+    for(int i = 0; i < length; i++)
+    {
+        if (a[i] > max)
+        {
+            max = a[i];
+        }
+    }
+
+    return max;
+}
 
 
 /* IntSign
@@ -322,7 +345,34 @@ void AddOne(char *input, char *output)
 /* Your comment goes here*/
 void Histogram(char *result, int *values, int numValues)
 {
-    result[0] = (char)('~' + numValues + values[0]);
+    int height = MaxInt(values, numValues) + 1;
+    int width = numValues + 1;
+    int count = 0;
+
+    //printf("\n");
+
+    for (int i = 0; i < height + 1; i++){
+        for (int j = 0; j < width + 1; j++){
+
+            if (j == 0 || j == width || i == 0 || i == height){
+                result[count] = '*';
+            } else if (values[j - 1] >= height - i) {
+                result[count] = 'X';
+            } else {
+                result[count] = ' ';
+            }
+
+            //printf("%c", result[count]);
+            count++;
+        }
+        if (i < height){
+            result[count] = '\n';
+            //printf("%c",result[count]);
+        } else if (i == height){
+            result[count] = 0;
+        }
+        count++;
+    }
 }
 
 /* Your comment goes here*/
