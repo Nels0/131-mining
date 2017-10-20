@@ -79,7 +79,7 @@ Author: Nelson Cook
 
 Inputs
     0 - INT     
-Outputs
+Returns
     0 - INT: -1, 0 or 1: Whether number is negative, zero, or positive
 */
 
@@ -96,21 +96,23 @@ int IntSign(int val)
 
 
 /*AddSig
+Offsets a string by +1 (To the right) recursively
+
 
 Author: ncoo162
 
 Inputs:
-    0 - Out 
-    1 - 
-    2 - 
-    3 - 
-Outputs:
-    nil
+    0 - CHAR[]: Output string
+    1 - CHAR:   The character to prefix
+    2 - INT:    Which position to offset from
+    3 - INT:    Length of the string (Before offset)
+Returns:
+    void
 */
 void AddSig(char *output, char tempchar, int pos, int length)
 {
 
-    char t;
+    char t; //tempchar for child function
 
     if (pos == length) {
         output[pos] = tempchar;
@@ -140,7 +142,7 @@ Inputs
     0 - INT - Number to find divisor of
     1 - INT - Number to find divisor of
     2 - INT - Number to find divisor of
-Outputs
+Returns
     0 - INT: Largest number which is a factor of args 0-2
 */
 int DivisorOfThree(int a, int b, int c)
@@ -172,7 +174,7 @@ Author: Nelson Cook
 Inputs
     0 - INT Array: Dataset to compute average of
 
-Outputs
+Returns
     0 - DOUBLE: Mean of the dataset
 */
 double AverageSheep(int *counts)
@@ -209,12 +211,12 @@ Author: Nelson Cook
 Inputs
     0 - CHAR Array: String to convert
 
-Outputs
+Returns
     void
 */
 void Emphasise(char* word)
 {
-    int capitalise = 0;
+    int capitalise = 0; //Serves as '_' tracking AND offset variable.
     int i = 0;
     int len = strlen(word);
 
@@ -238,7 +240,7 @@ void Emphasise(char* word)
         }
     }
 
-    word[len + capitalise] = 0;
+    word[len + capitalise] = 0; //Remember the null terminator!
 }
 
 /* Prime Factors
@@ -254,7 +256,7 @@ Inputs
     0 - INT: Integer to find prime factors of
     1 - INT Array: List of factors found
 
-Outputs
+Returns
     0 - INT: Number of prime factors found, and length of arg 1
 */
 int PrimeFactors(int n, int *factors)
@@ -277,15 +279,27 @@ int PrimeFactors(int n, int *factors)
             i++;
         }
 
-        n = n/i; //reduce n
+        n /= i; //reduce n
         factors[numfactors] = i; //store prime factor (n.b will always be prime because it is the least factor)
-        numfactors++; //increment num factors
+        numfactors++; 
     }   
 
     return numfactors;
 }
 
+/* ConnectTwo
+Joins two points on a 2d array (start and end denoted by 1 and 2 respectively)
+Moves diagonally then in a straight line from point 1 to point 2
+Stores path by marking locations travelled with a 3.
 
+Author: Nelson Cook
+
+Inputs
+    0 - INT[10][10]: Map for path to traverse.
+
+Returns
+    void
+*/
 void ConnectTwo(int maze[10][10])
 {
 
@@ -360,7 +374,7 @@ Author: Nelson Cook
 Inputs
     0 - CHAR Array: String to convert
 
-Outputs
+Returns
     void
 */
 void AddOne(char *input, char *output)
@@ -402,7 +416,20 @@ void AddOne(char *input, char *output)
             
 }
 
-/* Your comment goes here*/
+/* Histogram
+Produces a string which when printed,draws a histogram with
+a border of "*". given int array of frequencies.
+
+Author: Nelson Cook
+
+Inputs
+    0 - CHAR[]: Output of histogram function (including \n and \0)
+    1 - INT[]:  Frequncies to draw
+    2 - INT:    Length of arg 1
+
+Returns
+    void
+*/
 void Histogram(char *result, int *values, int numValues)
 {
     int height = MaxInt(values, numValues) + 1;
