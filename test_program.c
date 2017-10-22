@@ -237,13 +237,13 @@ void Test_DayTrader(void)
 		printf("\nTask Six:   DayTrader()      - ");
 		DayTrader(pricesA, 15, &bestRun, &bestRunIndex);
 		if (bestRun != 4 || bestRunIndex != 3) {
-			printf("FAIL (pricesA) ");
+			printf("FAIL (pricesA) Got bestrun: %d, index: %d", bestRun, bestRunIndex);
 		} else {
 			printf("PASS ");
 		}
 		DayTrader(pricesB, 10, &bestRun, &bestRunIndex);
 		if (bestRun != 3 || bestRunIndex != 6) {
-			printf("FAIL (pricesB) ");
+			printf("FAIL (pricesB) Got bestrun: %d, index: %d", bestRun, bestRunIndex);
 		} else {
 			printf("PASS ");
 		}

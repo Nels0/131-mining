@@ -103,7 +103,7 @@ Author: ncoo162
 
 Inputs:
     0 - CHAR[]: Output string
-    1 - CHAR:   The character to prefix
+    1 - CHAR:   The character to prefix to the string
     2 - INT:    Which position to offset from
     3 - INT:    Length of the string (Before offset)
 Returns:
@@ -116,11 +116,11 @@ void AddSig(char *output, char tempchar, int pos, int length)
 
     if (pos == length) {
         output[pos] = tempchar;
-        output[pos + 1] = 0; //end string char
+        output[pos + 1] = 0; //Don't forget the null terminator!
     } else {
         t = output[pos];
         output[pos] = tempchar;
-        AddSig(output, t, pos + 1, length);
+        AddSig(output, t, pos + 1, length); //Recurse
     }
 
 
@@ -314,11 +314,9 @@ void ConnectTwo(int maze[10][10])
     for (i = 0; i <10; i++){
         for (j = 0; j <10; j++){
             if (maze[i][j] == 1){
-                //printf("\nfound start: %d, %d\n", i, j);
                 start_x = i;
                 start_y = j;
             } else if (maze[i][j] == 2){
-                //printf("found end: %d, %d\n", i, j);
                 end_x = i;
                 end_y = j;
             }
@@ -351,19 +349,36 @@ void ConnectTwo(int maze[10][10])
     maze[end_x][end_y] = 2;
 }
 
-/* Your comment goes here*/
+/*
+Currently not working
+*/
 void DayTrader(int *prices, int numPrices, int *bestRun, int *bestRunIndex)
 {
-    int lastRun = 0;
-    int lastRunIndex = 0;
+    *bestRun = 0;
+    *bestRunIndex = 0;
+    int currentRun = 0;
+    int currentRunIndex = 0;
 
+    for (int i = 0; i < numPrices -1; i++){
+        if (prices[i] < prices[i+1]){
+            currentRun++;
+        } else {
+            if (currentRun > *bestRun){
+            *bestRun = currentRun;
+            *bestRunIndex = currentRunIndex;
+            }
+
+        currentRun = 0;
+        currentRunIndex = i+1;
+        }
+    }
 
 }
 
 /* Your comment goes here*/
 void Compress(int *input, int *output)
 {
-    output[0] = 99999 + input[0];
+    //output[0] = 99999 + input[0];
 }
 
 /* AddOne
@@ -402,10 +417,9 @@ void AddOne(char *input, char *output)
         //printf("Position %d: Was: %c, now %c\n", i, input[i], output[i]);
     }
 
-//relocate array if it's 1 longer
+//relocate array if there is a carry still required
     if (carry == 1){
-
-        AddSig(output, output[0], 1, len);
+        AddSig(output, output[0], 1, len); //carry the 1
         output[0] = '1';
         output[len + 2] = 0;
     } else {
@@ -436,29 +450,28 @@ void Histogram(char *result, int *values, int numValues)
     int width = numValues + 1;
     int count = 0;
 
-    //printf("\n");
 
     for (int i = 0; i < height + 1; i++){
         for (int j = 0; j < width + 1; j++){
 
-            if (j == 0 || j == width || i == 0 || i == height){
+            if (j == 0 || j == width || i == 0 || i == height){ //Border conditions
                 result[count] = '*';
-            } else if (values[j - 1] >= height - i){
+            } else if (values[j - 1] >= height - i){ //current height is less than the histogram value (with border offsets)
                 result[count] = 'X';
             } else {
-                result[count] = ' ';
+                result[count] = ' '; //Empty space
             }
 
-            //printf("%c", result[count]);
             count++;
         }
-        if (i < height){
+
+
+        if (i < height){ //Don't add an \n to the end of the graph string
             result[count] = '\n';
-            //printf("%c",result[count]);
         } else if (i == height){
-            result[count] = 0;
+            result[count] = 0; //Don't forget the null termniator!
         }
-        count++;
+        count++; 
     }
 }
 
