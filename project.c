@@ -151,7 +151,11 @@ int DivisorOfThree(int a, int b, int c)
         return -1;
     }
 
-    int nums[3] = {a, b, c};
+    int nums[3];
+
+    nums[0] = a;
+    nums[1] = b;
+    nums[2] = c;
 
     int min = MinInt(nums, 3); //To save time, we know the GCD will never be greater than the smallest number
 
@@ -364,13 +368,18 @@ void DayTrader(int *prices, int numPrices, int *bestRun, int *bestRunIndex)
             currentRun++;
         } else {
             if (currentRun > *bestRun){
-            *bestRun = currentRun;
-            *bestRunIndex = currentRunIndex;
+                *bestRun = currentRun;
+                *bestRunIndex = currentRunIndex;
             }
 
-        currentRun = 0;
-        currentRunIndex = i+1;
+            currentRun = 0;
+            currentRunIndex = i+1;
         }
+    }
+
+    if (currentRun > *bestRun){
+        *bestRun = currentRun;
+        *bestRunIndex = currentRunIndex;
     }
 
 }
@@ -378,7 +387,27 @@ void DayTrader(int *prices, int numPrices, int *bestRun, int *bestRunIndex)
 /* Your comment goes here*/
 void Compress(int *input, int *output)
 {
-    //output[0] = 99999 + input[0];
+    int i = 0;
+    int countCmp = 0;
+    int cmpIdx = 0;
+    int outLen = 1;
+
+    while (input[i] != -1){
+
+        if (input[i] == input[cmpIdx]){
+            countCmp++;
+            output[outLen * 2] = input[cmpIdx];
+            output[outLen * 2 - 1] = countCmp;
+        } else {
+            printf(" %d, %d,", input[cmpIdx], countCmp);
+            cmpIdx = i;
+            i--;
+        }
+
+        i++;
+    }
+
+    output[i] = -1;
 }
 
 /* AddOne
@@ -399,10 +428,7 @@ void AddOne(char *input, char *output)
     int i;
 
 
-    //printf("\n Length: %d\n", len);
     //Add 1 and carry the 1 for the least significant digits
-
-    //output[len - 1] = input[len - 1] + 1;
     
     for (i = len - 1; i >= 0; i--){
 
@@ -414,7 +440,6 @@ void AddOne(char *input, char *output)
         } else {            
             carry = 0;
         }
-        //printf("Position %d: Was: %c, now %c\n", i, input[i], output[i]);
     }
 
 //relocate array if there is a carry still required
