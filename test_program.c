@@ -266,6 +266,8 @@ void Test_Compress(void)
 	int inputD[MAX_ARRAY_SIZE] = {4,7,7,7,-1};
 	int output[MAX_ARRAY_SIZE];
 
+	int i;
+
 	Compress(inputA, output);
 	if (output[0] == 99999) {
 		printf("\nTask Seven: Compress()       - not yet implemented");
@@ -274,18 +276,30 @@ void Test_Compress(void)
 		Compress(inputB, output);
 		if (output[0] != 2 || output[1] != 1 || output[2] != 2 || output[3] != 2 || output[4] != -1) {
 			printf("FAIL (inputB) ");
+			i = 0;
+			while (output[i] != -1){
+				printf("%d ", output[i++]);
+			}
 		} else {
 			printf("PASS ");
 		}
 		Compress(inputC, output);
 		if (output[0] != 10 || output[1] != 7 || output[2] != -1) {
 			printf("FAIL (inputC) ");
+			i = 0;
+			while (output[i] != -1){
+				printf("%d ", output[i++]);
+			}
 		} else {
 			printf("PASS ");
 		}
 		Compress(inputD, output);
 		if (output[0] != 1 || output[1] != 4 || output[2] != 3 || output[3] != 7 || output[4] != -1) {
 			printf("FAIL (inputD) ");
+			i = 0;
+			while (output[i] != -1){
+				printf("%d ", output[i++]);
+			}
 		} else {
 			printf("PASS ");
 		}

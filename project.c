@@ -390,24 +390,26 @@ void Compress(int *input, int *output)
     int i = 0;
     int countCmp = 0;
     int cmpIdx = 0;
-    int outLen = 1;
+    int outLen = 0;
 
     while (input[i] != -1){
 
+
         if (input[i] == input[cmpIdx]){
             countCmp++;
-            output[outLen * 2] = input[cmpIdx];
-            output[outLen * 2 - 1] = countCmp;
+            output[outLen * 2 + 1] = input[cmpIdx];
+            output[outLen * 2] = countCmp;
         } else {
-            printf(" %d, %d,", input[cmpIdx], countCmp);
+            outLen++;
             cmpIdx = i;
+            countCmp = 0;
             i--;
         }
 
         i++;
     }
 
-    output[i] = -1;
+    output[outLen * 2 + 2] = -1;
 }
 
 /* AddOne
