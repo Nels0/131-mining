@@ -505,6 +505,56 @@ void Histogram(char *result, int *values, int numValues)
 /* Your comment goes here*/
 void GoldRush(int *results, int rows, int cols, int map[MAX_MAP_SIZE][MAX_MAP_SIZE], int bonus)
 {
-    results[0] = 99993 + rows + cols + map[0][0] + bonus;
+    //results[0] = 99993 + rows + cols + map[0][0] + bonus;
+
+    int visited[MAX_MAP_SIZE][MAX_MAP_SIZE] = {0};
+    int goldCount = 0;
+    int pureGoldCount = 0;
+    int pure = 0;
+    int i, j;
+
+
+    switch (bonus) {
+        case 0 :
+        //iterate over whole array
+
+        for (i = 0; i < rows; i++){
+            for (j = 0; j < cols; j++){
+                if (map[i][j] == 9){
+                    goldCount++;
+
+
+                    if (i > 0 && i < rows - 1 && j > 0 && j < cols - 1){
+                        //printf("checking if pure ");
+                        pure = 1;
+                        for (int x = -1; x < 2; x++){
+                            for (int y = -1; y <2; y++){
+                                if (map[i+x][j+y] != 9)
+                                {
+                                    pure = 0;
+                                }
+                            }
+                        }
+                        pureGoldCount += pure;
+                    }
+
+                }
+            }
+        }
+
+        results[0] = goldCount;
+        results[1] = pureGoldCount;
+        //printf("%d %d ", results[0], results[1] );
+
+        break;
+
+        case 1 :
+
+        break;
+
+        case 2 :
+
+        break;
+    }
 }
 
