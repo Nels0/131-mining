@@ -730,43 +730,43 @@ void Test_AddOne(void)
 		}
 		AddOne(wordsD, output);
 		if (strcmp(output, "1")) {
-			printf("FAIL (wordsD) ");
+			printf("FAIL (wordsD), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsE, output);
 		if (strcmp(output, "32768")) {
-			printf("FAIL (wordsE) ");
+			printf("FAIL (wordsE), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsF, output);
 		if (strcmp(output, "6")) {
-			printf("FAIL (wordsF) ");
+			printf("FAIL (wordsF), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsG, output);
 		if (strcmp(output, "10000000000000000000000000000000")) {
-			printf("FAIL (wordsG) ");
+			printf("FAIL (wordsG), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsH, output);
 		if (strcmp(output, "1234567891")) {
-			printf("FAIL (wordsH) ");
+			printf("FAIL (wordsH), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsI, output);
 		if (strcmp(output, "123456790")) {
-			printf("FAIL (wordsI) ");
+			printf("FAIL (wordsI), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}
 		AddOne(wordsJ, output);
 		if (strcmp(output, "1000000000000001")) {
-			printf("FAIL (wordsJ) ");
+			printf("FAIL (wordsJ), got:%s ", output);
 		} else {
 			printf("PASS ");
 		}

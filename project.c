@@ -134,18 +134,18 @@ Inputs:
 Returns:
     void
 */
-void AddSig(char *output, char tempchar, int pos, int length)
+void AddSig(char *output, char prefix, int pos, int maxIdx)
 {
 
-    char t; //tempchar for child function
+    char nextprefix; //tempchar for child function
 
-    if (pos == length) {
-        output[pos] = tempchar;
+    if (pos == maxIdx) {
+        output[pos] = prefix;
         output[pos + 1] = 0; //Don't forget the null terminator!
     } else {
-        t = output[pos];
-        output[pos] = tempchar;
-        AddSig(output, t, pos + 1, length); //Recurse
+        nextprefix = output[pos];
+        output[pos] = prefix;
+        AddSig(output, nextprefix, pos + 1, maxIdx); //Recurse
     }
 
 }
@@ -499,35 +499,26 @@ Returns
 void AddOne(char *input, char *output)
 {
     int carry = 1;
-    int len = strlen(input);
-    int i;
+    int len = strlen(input);  
 
 
-    //Add 1 and carry the 1 for the least significant digits
-    
-    for (i = len - 1; i >= 0; i--){
-
+    for (int i = len - 1; i >= 0; --i){
         output[i] = (char)(input[i] + carry);
-        
+
         if (output[i] > '9'){
-            carry = 1;
             output[i] = '0';
-        } else {            
+            carry = 1;
+        } else {
             carry = 0;
         }
     }
 
-//relocate array if there is a carry still required
+
     if (carry == 1){
-        AddSig(output, output[0], 1, len); //carry the 1
-        output[0] = '1';
-        output[len + 2] = 0;
+        AddSig(output, '1', 0, len);
     } else {
-        output[len + 1] = 0;
+        output[len] = 0;
     }
-
-
-            
 }
 
 /* Histogram
