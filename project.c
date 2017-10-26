@@ -95,6 +95,31 @@ int IntSign(int val)
 }
 
 
+void SwapInt(int i, int j, int *values)
+{
+    int temp = values[i];
+    values[i] = values[j];
+    values[j] = temp;
+
+}
+
+void BubblesortDescending(int count, int *values)
+{
+    if (count == 1){
+        return;
+    }
+    for (int i = 0; i < count; i++){
+        for (int j = 0; j < count -1; j++){
+            if (values[j] < values[j+1]){
+                SwapInt(j, j+1, values);
+            }
+        }
+    }
+
+}
+
+
+
 /*AddSig
 Offsets a string by +1 (To the right) recursively
 
@@ -123,9 +148,57 @@ void AddSig(char *output, char tempchar, int pos, int length)
         AddSig(output, t, pos + 1, length); //Recurse
     }
 
+}
+
+
+int CheckPure(int rows, int cols, int i, int j, int map[MAX_MAP_SIZE][MAX_MAP_SIZE])
+{
+    if (i > 0 && i < rows - 1 && j > 0 && j < cols - 1){
+        for (int x = -1; x < 2; x++){
+            for (int y = -1; y <2; y++){
+                if (map[i+x][j+y] != 9){
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    } else {
+        return 0;
+    }
 
 }
 
+
+int InBounds(int i, int j, int rows, int cols){
+    if (i < 0 || i > rows || j < 0 || j > cols){
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+
+void ExploreRegion(int regions, int i, int j, int rows, int cols, int *goldCounts, int *pureGoldCounts, int visited[MAX_MAP_SIZE][MAX_MAP_SIZE], int map[MAX_MAP_SIZE][MAX_MAP_SIZE])
+{
+
+    for (int x = -1; x <= 1; x++){
+        for (int y = -1; y <= 1; y++){
+            //printf("Checking %2d %2d - ", i + x, j + y);            
+            if (InBounds(i+x, j+y, rows, cols) && map[i+x][j+y] == 9 && visited[i+x][j+y] != 1){
+                //printf("FOUND\n");
+                goldCounts[regions]++;
+                if (CheckPure(rows, cols, i, j, map)) {
+                    pureGoldCounts[regions]++;
+                }
+                visited[i+x][j+y] = 1;
+                ExploreRegion(regions, i+x, j+y, rows, cols, goldCounts, pureGoldCounts, visited, map);
+            } else {
+                //printf("NOT FOUND\n");
+            }
+        }
+    }
+
+}
 
 /* REQUIRED FUNCTIONS */
 /* Implement each of the required functions below.  The code that is provided initially */
@@ -508,35 +581,26 @@ void GoldRush(int *results, int rows, int cols, int map[MAX_MAP_SIZE][MAX_MAP_SI
     //results[0] = 99993 + rows + cols + map[0][0] + bonus;
 
     int visited[MAX_MAP_SIZE][MAX_MAP_SIZE] = {0};
+    int goldCounts[MAX_ARRAY_SIZE] = {0};
+    int pureGoldCounts[MAX_ARRAY_SIZE] = {0};
+
     int goldCount = 0;
     int pureGoldCount = 0;
-    int pure = 0;
     int i, j;
+    int regions = 0;
 
 
     switch (bonus) {
-        case 0 :
-        //iterate over whole array
+        case 0 : //Not bonus task
+
 
         for (i = 0; i < rows; i++){
             for (j = 0; j < cols; j++){
                 if (map[i][j] == 9){
                     goldCount++;
 
-
-                    if (i > 0 && i < rows - 1 && j > 0 && j < cols - 1){
-                        //printf("checking if pure ");
-                        pure = 1;
-                        for (int x = -1; x < 2; x++){
-                            for (int y = -1; y <2; y++){
-                                if (map[i+x][j+y] != 9)
-                                {
-                                    pure = 0;
-                                }
-                            }
-                        }
-                        pureGoldCount += pure;
-                    }
+                    pureGoldCount += CheckPure(rows, cols, i, j, map);
+                    
 
                 }
             }
@@ -544,15 +608,53 @@ void GoldRush(int *results, int rows, int cols, int map[MAX_MAP_SIZE][MAX_MAP_SI
 
         results[0] = goldCount;
         results[1] = pureGoldCount;
-        //printf("%d %d ", results[0], results[1] );
 
         break;
 
-        case 1 :
+        default : //Bonus Task 1
 
-        break;
+        //printf("Executing Bonus Task:\n");
+            //Check entire map, and store amount of gold and pure gold per-region
+            for (i = 0; i < rows; i++){
+                for (j = 0; j < cols; j++){
+                    if (map[i][j] == 9 && visited[i][j] != 1){
+                        //printf("Found gold at %d, %d! Searching for more.\n", i, j);
+                        //goldCounts[regions]++;
+                        ExploreRegion(regions, i, j, rows, cols, goldCounts, pureGoldCounts, visited, map);
+                        visited[i][j] = 1;
+                        regions++;
+                    }
+                    
+                }
+            }
 
-        case 2 :
+            switch (bonus){
+                case 1:
+                    //quicksort gold counts
+                    BubblesortDescending(regions, goldCounts);
+
+                    for (i = 0; i <= regions; ++i){
+                        results[i] = goldCounts[i];
+                    }
+
+                    results[regions] = 0; // Null terminator in case there aren't any nonzero values
+
+                    //add zero
+                break;
+
+                case 2:
+
+                    //quicksort pure gold counts
+                    BubblesortDescending(regions, pureGoldCounts);
+
+                    for (i = 0; i <= regions; ++i){
+                        results[i] = pureGoldCounts[i];
+                    }
+
+                    results[regions + 1] = 0; // Null terminator in case there aren't any nonzeros values
+
+                break;
+            }
 
         break;
     }

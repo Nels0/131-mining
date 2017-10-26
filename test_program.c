@@ -18,6 +18,8 @@ void Test_Compress(void);
 void Test_AddOne(void);
 void Test_Histogram(void);
 void Test_GoldRush(void);
+void Test_Bonus1(void);
+void Test_Bonus2(void);
 
 /* You do not need to modify the main() function - it simply calls each of */
 /* the test functions */
@@ -50,6 +52,9 @@ int main(void)
 	Test_AddOne();
 	Test_Histogram();
 	Test_GoldRush();
+	Test_Bonus1();
+	Test_Bonus2();
+
 
 	return 0;
 }
@@ -429,4 +434,106 @@ void Test_GoldRush(void)
 			printf("PASS ");
 		}
 	}
+}
+void Test_Bonus1(void){
+
+	int results[MAX_ARRAY_SIZE];
+//	int map0[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+
+	int map1[MAX_MAP_SIZE][MAX_MAP_SIZE] = {
+			{1,2,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,4,3,0,0,0,0,9,9,8,0,0,0,0,0},
+			{0,2,0,3,3,0,0,9,9,0,0,0,0,0,0},
+			{0,0,0,0,0,4,6,9,9,6,0,0,0,0,0},
+			{0,0,0,0,0,0,9,0,8,0,0,6,0,0,0},
+			{0,0,9,9,9,9,0,0,0,0,7,7,8,8,0},
+			{0,0,9,9,9,9,0,0,0,0,0,7,0,0,0},
+			{0,0,9,9,9,9,0,1,1,1,2,2,2,2,2},
+			{0,0,0,9,9,0,0,0,0,0,0,0,0,3,0},
+			{0,0,0,4,4,0,0,0,0,0,0,0,5,6,0},
+			{0,0,0,0,9,9,9,0,0,9,0,0,0,5,0},
+			{0,0,1,2,9,9,9,0,0,0,9,0,0,4,2},
+			{0,0,0,0,9,9,9,0,0,0,9,9,9,0,0},
+			{9,9,0,0,0,0,1,0,0,0,0,9,0,0,0},
+			{9,0,0,0,0,0,2,2,0,0,0,0,0,0,0}
+		};
+	int map2[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {9, 9, 9}, {9, 9, 9}, {9, 9, 9} };
+	int map3[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {9, 9, 9}, {9, 9, 9}, {9, 9, 8} };
+
+	int i;
+
+		printf("\nBonus 1:");
+		GoldRush(results, 15, 15, map1, 1);
+		printf(" \nTotal gold regions (Map1) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
+		GoldRush(results, 3, 3, map2, 1);
+		printf(" \nTotal gold regions (Map2) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
+		GoldRush(results, 3, 3, map3, 1);
+		printf(" \nTotal gold regions (Map3) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
+}
+
+void Test_Bonus2(void)
+{
+
+	int results[MAX_ARRAY_SIZE];
+//	int map0[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {0, 0, 0}, {0, 0, 0}, {0, 0, 0} };
+
+	int map1[MAX_MAP_SIZE][MAX_MAP_SIZE] = {
+			{1,2,2,0,0,0,0,0,0,0,0,0,0,0,0},
+			{0,4,3,0,0,0,0,9,9,8,0,0,0,0,0},
+			{0,2,0,3,3,0,0,9,9,0,0,0,0,0,0},
+			{0,0,0,0,0,4,6,9,9,6,0,0,0,0,0},
+			{0,0,0,0,0,0,9,0,8,0,0,6,0,0,0},
+			{0,0,9,9,9,9,0,0,0,0,7,7,8,8,0},
+			{0,0,9,9,9,9,0,0,0,0,0,7,0,0,0},
+			{0,0,9,9,9,9,0,1,1,1,2,2,2,2,2},
+			{0,0,0,9,9,0,0,0,0,0,0,0,0,3,0},
+			{0,0,0,4,4,0,0,0,0,0,0,0,5,6,0},
+			{0,0,0,0,9,9,9,0,0,9,0,0,0,5,0},
+			{0,0,1,2,9,9,9,0,0,0,9,0,0,4,2},
+			{0,0,0,0,9,9,9,0,0,0,9,9,9,0,0},
+			{9,9,0,0,0,0,1,0,0,0,0,9,0,0,0},
+			{9,0,0,0,0,0,2,2,0,0,0,0,0,0,0}
+		};
+	int map2[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {9, 9, 9}, {9, 9, 9}, {9, 9, 9} };
+	int map3[MAX_MAP_SIZE][MAX_MAP_SIZE] = { {9, 9, 9}, {9, 9, 9}, {9, 9, 8} };
+
+	int i;
+
+		printf("\nBonus 2:");
+		GoldRush(results, 15, 15, map1, 2);
+		printf(" \nTotal pure gold regions (Map1) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
+		GoldRush(results, 3, 3, map2, 2);
+		printf(" \nTotal pure gold regions (Map2) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
+		GoldRush(results, 3, 3, map3, 2);
+		printf(" \nTotal pure gold regions (Map3) = ");
+		i = 0;
+		while (results[i] != 0) {
+ 			printf("%d ", results[i]);
+ 			i++;
+ 		} 
 }
